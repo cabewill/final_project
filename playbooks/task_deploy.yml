@@ -1,0 +1,6 @@
+---
+- name: Task Updater Deployment
+  hosts: localhost
+  become: true
+  tasks:
+    - include: git_clone.yml

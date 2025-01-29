@@ -1,0 +1,10 @@
+---
+- name: Web Application Deployment
+  hosts: localhost
+  become: true
+  tasks:
+    - include: git_clone.yml
+
+    - name: Install Python dependencies
+      pip:
+        requirements: /opt/final_project/webapp/requirements.txt
