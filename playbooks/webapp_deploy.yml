@@ -3,7 +3,7 @@
   hosts: localhost
   become: true
   tasks:
-    - ansible.builtin.import_tasks: git_clone.yml
+    - ansible.builtin.import_tasks: git_tasks.yml
 
     - name: Install Python dependencies
       pip:
