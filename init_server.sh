@@ -28,10 +28,11 @@ if [ ! -d "$REPO_DIR" ]; then
 else
   echo "Repository is already cloned. Pulling last updates"
   cd "$REPO_DIR"
-  git pull https://github.com/cabewill/final_project.git 
+  git pull
 fi
 
   # export ANSIBLE_HOST_KEY_CHECKING=False
+  git checkout bernardo/ansible
 
   # Run the server setup playbook
   echo "Running server setup playbook..."
