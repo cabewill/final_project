@@ -2,9 +2,23 @@
 - name: Web Application Deployment
   hosts: localhost
   become: true
+  vars_files: external_vars.yml
   tasks:
     - ansible.builtin.import_tasks: git_tasks.yml
 
+    - name: Deploy newes files
+      ansible.builtin.copy:
+        src: "{{ temp_dir }}/webapp"
+        dest: "{{ webapp_dir }}"
+
+     # Create a Python Virtual Environment
+    - name: Create a virtual environment
+      command: python3 -m venv "{{ webapp_dir }}/venv"
+      args:
+        creates: "{{ webapp_dir }}/venv"
+
+     # Install Required Python Packages
     - name: Install Python dependencies
-      pip:
-        requirements: /opt/final_project/webapp/requirements.txt
+      command: "{{ webapp_dir }}/venv/bin/pip install -r {{ webapp_dir }}/requirements.txt"
+      args:
+        chdir: "{{ webapp_dir }}"

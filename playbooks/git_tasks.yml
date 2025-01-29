@@ -1,4 +1,5 @@
 - name: Update task code from repository
   git:
     repo: 'https://github.com/cabewill/final_project.git'
-    dest: /tmp/final_project
+    dest: "{{ temp_dir }}"
+    update: yes
