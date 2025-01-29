@@ -15,10 +15,10 @@
           - python3-venv
         state: present
 
-    # - name: Creates directory
-    #   ansible.builtin.file:
-    #   path: "{{ webapp_dir }}"
-    #   state: directory
+    - name: Creates directory
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        state: directory
 
     # Create a Systemd Service for Flask App
     - name: Create a systemd service file
@@ -31,8 +31,8 @@
 
           [Service]
           User=root
-          WorkingDirectory={{ webapp_dir }}
-          ExecStart={{ webapp_dir }}/venv/bin/python {{ webapp_dir }}/app.py
+          WorkingDirectory={{ app_dir }}/webapp
+          ExecStart={{ app_dir }}/webapp/venv/bin/python {{ app_dir }}/webapp/app.py
           Restart=always
 
           [Install]

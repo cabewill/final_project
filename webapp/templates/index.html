@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Feedback</title>
+</head>
+<body>
+    <h2>Leave Your Feedback</h2>
+    <form action="/" method="POST">
+        <label for="comment">Comment:</label><br>
+        <textarea name="comment" rows="4" cols="50" required></textarea><br><br>
+
+        <label for="experience">Experience:</label>
+        <select name="experience" required>
+            <option value="Good">Good</option>
+            <option value="Bad">Bad</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Previous Feedback</h2>
+    <ul>
+        {% for feedback in feedback_list %}
+            <li><strong>{{ feedback.experience }}:</strong> {{ feedback.comment }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

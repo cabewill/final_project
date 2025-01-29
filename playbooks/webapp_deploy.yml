@@ -4,21 +4,20 @@
   become: true
   vars_files: external_vars.yml
   tasks:
-    - ansible.builtin.import_tasks: git_tasks.yml
 
-    - name: Deploy newes files
-      ansible.builtin.copy:
-        src: "{{ temp_dir }}/webapp"
-        dest: "{{ webapp_dir }}"
+    - import_tasks: git_tasks.yml
+
+    - name: Deploy newest files
+      command: cp -r "{{ temp_dir }}/webapp" "{{ app_dir }}"
 
      # Create a Python Virtual Environment
     - name: Create a virtual environment
-      command: python3 -m venv "{{ webapp_dir }}/venv"
+      command: python3 -m venv "{{ app_dir }}/webapp/venv"
       args:
-        creates: "{{ webapp_dir }}/venv"
+        creates: "{{ app_dir }}/webapp/venv"
 
      # Install Required Python Packages
     - name: Install Python dependencies
-      command: "{{ webapp_dir }}/venv/bin/pip install -r {{ webapp_dir }}/requirements.txt"
+      command: "{{ app_dir }}/webapp/venv/bin/pip install -r {{ app_dir }}/webapp/requirements.txt"
       args:
-        chdir: "{{ webapp_dir }}"
+        chdir: "{{ app_dir }}"
