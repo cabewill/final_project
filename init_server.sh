@@ -32,7 +32,6 @@ else
 fi
 
   # export ANSIBLE_HOST_KEY_CHECKING=False
-  git checkout bernardo/ansible
 
   # Run the server setup playbook
   echo "Running server setup playbook..."
