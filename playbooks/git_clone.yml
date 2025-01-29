@@ -1,8 +1,0 @@
----
-- name: Git tasks
-  hosts: localhost
-  become: true
-    - name: Update task code from repository
-      git:
-        repo: 'https://github.com/cabewill/final_project.git'
-        dest: /tmp/final_project

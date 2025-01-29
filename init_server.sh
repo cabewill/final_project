@@ -26,10 +26,13 @@ if [ ! -d "$REPO_DIR" ]; then
     exit 1
   fi
 else
-  echo "Repository is already cloned."
+  echo "Repository is already cloned. Pulling last updates"
+  cd "$REPO_DIR"
+  git pull
 fi
 
   # export ANSIBLE_HOST_KEY_CHECKING=False
+  git checkout bernardo/ansible
 
   # Run the server setup playbook
   echo "Running server setup playbook..."
@@ -41,7 +44,7 @@ fi
 
 # Run the webapp deployment playbook
 echo "Running webapp deployment playbook..."
-ansible-playbook -i localhost, $REPO_DIR/playbooks/webapp_deploy.yml
+ansible-playbook -i localhost -c local, $REPO_DIR/playbooks/webapp_deploy.yml
 if [ $? -ne 0 ]; then
   echo "Error: Webapp deployment playbook failed."
   exit 1
@@ -49,7 +52,7 @@ fi
 
 # Run the task deployment playbook
 echo "Running task deployment playbook..."
-ansible-playbook -i localhost, $REPO_DIR/playbooks/task_deploy.yml
+ansible-playbook -i localhost -c local, $REPO_DIR/playbooks/task_deploy.yml
 if [ $? -ne 0 ]; then
   echo "Error: Task deployment playbook failed."
   exit 1
