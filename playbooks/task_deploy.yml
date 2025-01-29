@@ -3,4 +3,4 @@
   hosts: localhost
   become: true
   tasks:
-    - include: git_clone.yml
+    - ansible.builtin.import_tasks: git_clone.yml
