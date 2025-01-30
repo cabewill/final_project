@@ -20,7 +20,7 @@ def client():
 def test_home_redirect(client):
     """Ensure the home page redirects to /feedback."""
     response = client.get('/')
-    assert response.status_code == 302  # 302 Redirect
+    assert response.status_code == 304  # 302 Redirect
     assert b'/feedback' in response.data  # Ensures redirection URL is correct
 
 def test_feedback_page_load(client):

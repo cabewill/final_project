@@ -20,14 +20,13 @@
     - name: Install Python dependencies
       command: "{{ app_dir }}/webapp/venv/bin/pip install -r {{ app_dir }}/webapp/requirements.txt"
       args:
-        chdir: "{{ app_dir }}"
+        chdir: "{{ app_dir }}/webapp"
 
     - name: Run unit tests with pytest
-      command: pytest -v
+      command: "{{ app_dir }}/webapp/venv/bin/pytest -v"
       args:
-        chdir: /opt/flask_app
+        chdir: "{{ app_dir }}/webapp"
       register: pytest_result
-      ignore_errors: yes  # Allows playbook to continue even if tests fail
 
     - name: Display test results
       debug:
