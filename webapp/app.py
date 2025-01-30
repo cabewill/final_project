@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///feedback.db'
@@ -11,6 +12,8 @@ class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(500), nullable=False)
     experience = db.Column(db.String(10), nullable=False)  # "Good" or "Bad"
+    datetime = db.Column(db.DateTime, default=datetime.utcnow)  # Store timestamp
+
 
 # Initialize DB
 with app.app_context():

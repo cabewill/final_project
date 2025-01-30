@@ -2,5 +2,39 @@
 - name: Task Updater Deployment
   hosts: localhost
   become: true
+  vars_files:
+    - asana.yml
+  vars:
+    asana_project_id: 1209273349038992
   tasks:
-    - ansible.builtin.import_tasks: git_tasks.yml
+
+    - name: Install Perl and dependencies
+      apt:
+        name:
+          - perl
+          - libdbd-sqlite3-perl
+          - libjson-perl
+          - libwww-perl
+        state: present
+
+    - name: Install Perl Modules Using CPAN
+      command: cpan --notest {{ item }}
+      loop:
+        - DBD::SQLite
+        - JSON
+        - LWP::UserAgent
+      ignore_errors: yes
+
+    - name: Deploy feedback analyzer script
+      template:
+        src: ../feedback_analyzer/feedback_analyzer.pl.j2
+        dest: feedback_analyzer.pl
+        mode: '0755'
+
+    - name: Set up a cron job to run script daily
+      cron:
+        name: "Run Feedback Analyzer"
+        job: "/usr/bin/perl /opt/feedback_analyzer.pl"
+        minute: "59"
+        hour: "09"
+        state: present

@@ -23,7 +23,11 @@
     <h2>Previous Feedback</h2>
     <ul>
         {% for feedback in feedback_list %}
-            <li><strong>{{ feedback.experience }}:</strong> {{ feedback.comment }}</li>
+            <li>
+                <strong>{{ feedback.experience }}</strong> - {{ feedback.comment }}
+                <br>
+                <small>Submitted on: {{ feedback.datetime.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+            </li>
         {% endfor %}
     </ul>
 </body>
