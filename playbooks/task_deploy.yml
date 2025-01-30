@@ -4,6 +4,7 @@
   become: true
   vars_files:
     - asana.yml
+    - external_vars.yml
   vars:
     asana_project_id: 1209273349038992
   tasks:
@@ -25,16 +26,22 @@
         - LWP::UserAgent
       ignore_errors: yes
 
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ app_dir }}/task"
+        state: directory
+        mode: '0755'
+
     - name: Deploy feedback analyzer script
       template:
         src: ../feedback_analyzer/feedback_analyzer.pl.j2
-        dest: feedback_analyzer.pl
+        dest: "{{ app_dir }}/task/feedback_analyzer.pl"
         mode: '0755'
 
     - name: Set up a cron job to run script daily
       cron:
         name: "Run Feedback Analyzer"
-        job: "/usr/bin/perl /opt/feedback_analyzer.pl"
+        job: "/usr/bin/perl {{ app_dir }}/task/feedback_analyzer.pl"
         minute: "59"
-        hour: "09"
+        hour: "23"
         state: present

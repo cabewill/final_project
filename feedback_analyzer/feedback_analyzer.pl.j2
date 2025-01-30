@@ -11,6 +11,9 @@ my $db_file     = "/opt/feedback_app/webapp/instance/feedback.db";
 my $asana_token = "{{ vault_asana_token }}";  
 my $asana_project_id = "{{ asana_project_id }}";  
 
+# Get the current date for the report title
+my $report_date = strftime "%Y-%m-%d", localtime;
+
 # Open database connection
 my $dbh = DBI->connect("dbi:SQLite:dbname=$db_file", "", "", { RaiseError => 1, AutoCommit => 1 });
 
@@ -41,6 +44,9 @@ $task_content .= "✅ Positive: $positive ($pos_percent%)\n";
 $task_content .= "❌ Negative: $negative ($neg_percent%)\n";
 $task_content .= "📊 Total Feedback: $total\n";
 
+# Define task title with the date
+my $task_title = "Daily Feedback Report - $report_date";
+
 # Send task to Asana
 my $ua = LWP::UserAgent->new;
 my $response = $ua->post(
@@ -49,7 +55,7 @@ my $response = $ua->post(
     "Authorization" => "Bearer $asana_token",
     Content         => encode_json({
         data => {
-            name        => "Daily Feedback Report",
+            name        => $task_title,
             notes       => $task_content,
             projects    => [$asana_project_id],
         }

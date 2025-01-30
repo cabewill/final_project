@@ -37,7 +37,6 @@ set -euo pipefail
   fi
 
 
-
   export VAULT_PASSWORD=duckduck # This shouldn't be here, and in a production environment I'd get the value from an Azure Vault
 
   # Run the server setup playbook
