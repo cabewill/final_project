@@ -9,6 +9,8 @@
     asana_project_id: 1209273349038992
   tasks:
 
+    - import_tasks: git_tasks.yml
+
     - name: Install Perl and dependencies
       apt:
         name:

@@ -32,6 +32,8 @@ set -euo pipefail
     sudo git pull
   fi
 
+  chmod +x *.sh
+
   source $REPO_DIR/server_setup.sh
 
   source $REPO_DIR/webapp_deploy.sh

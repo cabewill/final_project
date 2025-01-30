@@ -31,6 +31,21 @@ chmod +x init_server.sh
 VAULT_PASSWORD=<password> ./init_server.sh
 ```
 
+## 🔄 Deploying Updates
+### 1️⃣ Deploy Only a New Web App
+
+To deploy updates to the Flask web application without affecting other components, run:
+```bash
+./webapp_deploy.sh
+```
+
+### 2️⃣ Deploy Only the Feedback Cron Task
+
+To deploy updates to the feedback analysis script without affecting the web application, run:
+```bash
+./task_deploy.sh
+```
+
 ## 📜 License
 
 This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
