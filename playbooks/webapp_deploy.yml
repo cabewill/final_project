@@ -21,3 +21,19 @@
       command: "{{ app_dir }}/webapp/venv/bin/pip install -r {{ app_dir }}/webapp/requirements.txt"
       args:
         chdir: "{{ app_dir }}"
+
+    - name: Run unit tests with pytest
+      command: pytest -v
+      args:
+        chdir: /opt/flask_app
+      register: pytest_result
+      ignore_errors: yes  # Allows playbook to continue even if tests fail
+
+    - name: Display test results
+      debug:
+        var: pytest_result.stdout_lines
+
+    - name: Fail if tests did not pass
+      fail:
+        msg: "Pytest failed. Check the logs above for details."
+      when: pytest_result.rc != 0
