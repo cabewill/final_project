@@ -44,20 +44,8 @@ set -euo pipefail
     exit 1
   fi
 
-# Run the webapp deployment playbook
-echo "Running webapp deployment playbook..."
-ansible-playbook -i localhost -c local, $REPO_DIR/playbooks/webapp_deploy.yml
-if [ $? -ne 0 ]; then
-  echo "Error: Webapp deployment playbook failed."
-  exit 1
-fi
+source $REPO_DIR/webapp_deploy.sh
 
-# Run the task deployment playbook
-echo "Running task deployment playbook..."
-ansible-playbook -i localhost -c local --vault-password-file vault.pass $REPO_DIR/playbooks/task_deploy.yml
-if [ $? -ne 0 ]; then
-  echo "Error: Task deployment playbook failed."
-  exit 1
-fi
+source $REPO_DIR/webapp_deploy.sh
 
 echo "Setup complete."
