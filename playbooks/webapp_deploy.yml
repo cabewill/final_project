@@ -37,3 +37,8 @@
       fail:
         msg: "Pytest failed. Check the logs above for details."
       when: pytest_result.rc != 0
+
+    - name: Restart Flask application after changes
+      systemd:
+        name: "{{ service_name }}"
+        state: restarted
