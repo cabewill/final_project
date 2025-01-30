@@ -118,6 +118,28 @@ To get the Asana token you need to:
 ansible-vault edit playbooks/asana.yml
 ```
 
+### 6️⃣  Check Database Integrity
+If feedback submissions are missing, inspect the SQLite database:
+```bash
+sqlite3 /opt/feedback_app/webapp/instance/feedback.db "SELECT * FROM feedback ORDER BY datetime DESC
+ LIMIT 10;"
+```
+To get the Asana token you need to:
+```bash
+ansible-vault edit playbooks/asana.yml
+```
+
+### 7️⃣ View System Logs
+For broader debugging, check system logs:
+
+```bash
+dmesg | tail -50
+```
+or
+```bash
+tail -f /var/log/syslog
+```
+
 ## 📜 License
 
 This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
