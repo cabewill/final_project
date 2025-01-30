@@ -19,9 +19,9 @@ class Feedback(db.Model):
 with app.app_context():
     db.create_all()
 
-# Home Route (Display Form and Past Feedback)
-@app.route('/', methods=['GET', 'POST'])
-def index():
+# Change route from `/` to `/feedback`
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
     if request.method == 'POST':
         comment = request.form['comment']
         experience = request.form['experience']
@@ -32,10 +32,15 @@ def index():
         new_feedback = Feedback(comment=comment, experience=experience)
         db.session.add(new_feedback)
         db.session.commit()
-        return redirect('/')
+        return redirect('/feedback')
 
     feedback_list = Feedback.query.all()
     return render_template('index.html', feedback_list=feedback_list)
+
+# Redirect `/` to `/feedback`
+@app.route('/')
+def redirect_to_feedback():
+    return redirect('/feedback')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
