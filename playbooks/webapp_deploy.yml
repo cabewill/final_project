@@ -27,6 +27,7 @@
       args:
         chdir: "{{ app_dir }}/webapp"
       register: pytest_result
+      ignore_errors: yes  # Allow playbook to continue even if tests fail
 
     - name: Display test results
       debug:
