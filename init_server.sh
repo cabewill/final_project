@@ -36,9 +36,6 @@ set -euo pipefail
     sudo git pull
   fi
 
-
-  export VAULT_PASSWORD=duckduck # This shouldn't be here, and in a production environment I'd get the value from an Azure Vault
-
   # Run the server setup playbook
   echo "Running server setup playbook..."
   ansible-playbook -i localhost -c local, $REPO_DIR/playbooks/server_setup.yml
@@ -57,7 +54,7 @@ fi
 
 # Run the task deployment playbook
 echo "Running task deployment playbook..."
-ansible-playbook -i localhost -c local --vault-password-file vault.pass playbooks/task_deploy.yml
+ansible-playbook -i localhost -c local --vault-password-file vault.pass $REPO_DIR/playbooks/task_deploy.yml
 if [ $? -ne 0 ]; then
   echo "Error: Task deployment playbook failed."
   exit 1
