@@ -46,6 +46,6 @@ set -euo pipefail
 
 source $REPO_DIR/webapp_deploy.sh
 
-source $REPO_DIR/webapp_deploy.sh
+source $REPO_DIR/task_deploy.sh
 
 echo "Setup complete."
