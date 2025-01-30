@@ -22,3 +22,28 @@
 ```bash
 git clone https://github.com/cabewill/final_project.git
 cd final_project
+```
+
+### 2️⃣ Run the init_server.sh
+
+```bash
+chmod +x init_server.sh
+VAULT_PASSWORD=<password> ./init_server.sh
+```
+
+## 📜 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## 📧 Contact
+
+For any issues, questions, or contributions, feel free to reach out:
+
+- **GitHub**: [cabewill](https://github.com/cabewill)
+- **LinkedIn**: [Bernardo Viana](https://www.linkedin.com/in/bernardoviana/)
+- **Email**: [cabewill@gmail.com](mailto:cabewill@gmail.com)
+
+
+
