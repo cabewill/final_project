@@ -18,11 +18,7 @@ set -euo pipefail
     echo "Ansible is already installed."
   fi
 
-  # cp -r ./playbooks $REPO_DIR/playbooks
-  # cp -r ./webapp $REPO_DIR/webapp
-
   # Check if the repository is already cloned
-
   if [ ! -d "$REPO_DIR" ]; then
     echo "Cloning repository..."
     git clone https://github.com/cabewill/final_project.git "$REPO_DIR"
@@ -36,16 +32,10 @@ set -euo pipefail
     sudo git pull
   fi
 
-  # Run the server setup playbook
-  echo "Running server setup playbook..."
-  ansible-playbook -i localhost -c local, $REPO_DIR/playbooks/server_setup.yml
-  if [ $? -ne 0 ]; then
-    echo "Error: Server setup playbook failed."
-    exit 1
-  fi
+  source $REPO_DIR/server_setup.sh
 
-source $REPO_DIR/webapp_deploy.sh
+  source $REPO_DIR/webapp_deploy.sh
 
-source $REPO_DIR/task_deploy.sh
+  source $REPO_DIR/task_deploy.sh
 
-echo "Setup complete."
+  echo "Setup complete."
