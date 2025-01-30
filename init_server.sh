@@ -32,7 +32,7 @@ set -euo pipefail
     sudo git pull
   fi
 
-  chmod +x *.sh
+  sudo chmod +x $REPO_DIR/*.sh
 
   source $REPO_DIR/server_setup.sh
 
