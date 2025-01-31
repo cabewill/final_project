@@ -1,11 +1,25 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import logging
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///feedback.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+# Configure logging
+logging.basicConfig(filename='/var/log/flask_app.log', level=logging.INFO,
+                    format='%(asctime)s %(levelname)s: %(message)s')
+
+@app.before_request
+def log_request():
+    logging.info(f"Request: {request.method} {request.url}")
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logging.error(f"Error: {str(e)}", exc_info=True)
+    return "Internal Server Error", 500
 
 # Database Model
 class Feedback(db.Model):
