@@ -5,10 +5,21 @@
   vars_files: external_vars.yml
   tasks:
 
-    - import_tasks: git_tasks.yml
+    # - import_tasks: git_tasks.yml
+
+    # - name: Deploy newest files
+    #   command: cp -r "{{ temp_dir }}/webapp" "{{ app_dir }}"
 
     - name: Deploy newest files
-      command: cp -r "{{ temp_dir }}/webapp" "{{ app_dir }}"
+      command: cp -r "../webapp" "{{ app_dir }}"
+
+    - name: Deploy Service files
+      command: cp -r "../webapp/flask_app.service" "/etc/systemd/system/flask_app.service"
+
+    - name: Restart Flask application after changes
+      systemd:
+        name: "flask_app"
+        state: restarted
 
      # Create a Python Virtual Environment
     - name: Create a virtual environment

@@ -16,10 +16,10 @@ logging.basicConfig(filename='/var/log/flask_app.log', level=logging.INFO,
 def log_request():
     logging.info(f"Request: {request.method} {request.url}")
 
-@app.errorhandler(Exception)
-def handle_exception(e):
-    logging.error(f"Error: {str(e)}", exc_info=True)
-    return "Internal Server Error", 500
+# @app.errorhandler(Exception)
+# def handle_exception(e):
+#     logging.error(f"Error: {str(e)}", exc_info=True)
+#     return "Internal Server Error", 500
 
 # Database Model
 class Feedback(db.Model):
@@ -33,14 +33,18 @@ class Feedback(db.Model):
 with app.app_context():
     db.create_all()
 
+@app.route('/health')
+def health_check():
+    return {"status": "ok"}, 200
+
 # Change route from `/` to `/feedback`
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     if request.method == 'POST':
         comment = request.form['comment']
         experience = request.form['experience']
-        if not comment or not experience:
-            return "Both fields are required!", 400
+        # if not comment or not experience:
+        #     return "Both fields are required!", 400
 
         # Save feedback to DB
         new_feedback = Feedback(comment=comment, experience=experience)

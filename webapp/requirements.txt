@@ -25,5 +25,6 @@ SQLAlchemy==2.0.37
 tomli==2.2.1
 typing-extensions==4.12.2
 urllib3==2.2.3
+uWSGI==2.0.28
 werkzeug==3.0.6
 zipp==3.20.2
