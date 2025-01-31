@@ -8,6 +8,19 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////opt/feedback_app/webapp/feed
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# Database Model
+class Feedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String(500), nullable=False)
+    experience = db.Column(db.String(10), nullable=False)  # "Good" or "Bad"
+    datetime = db.Column(db.DateTime, default=datetime.utcnow)  # Store timestamp
+
+
+# Initialize DB
+with app.app_context():
+    db.create_all()
+
+
 # Configure logging
 logging.basicConfig(filename='/var/log/flask_app.log', level=logging.INFO,
                     format='%(asctime)s %(levelname)s: %(message)s')
@@ -21,17 +34,6 @@ def log_request():
 #     logging.error(f"Error: {str(e)}", exc_info=True)
 #     return "Internal Server Error", 500
 
-# Database Model
-class Feedback(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    comment = db.Column(db.String(500), nullable=False)
-    experience = db.Column(db.String(10), nullable=False)  # "Good" or "Bad"
-    datetime = db.Column(db.DateTime, default=datetime.utcnow)  # Store timestamp
-
-
-# Initialize DB
-with app.app_context():
-    db.create_all()
 
 @app.route('/health')
 def health_check():
