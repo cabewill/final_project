@@ -1,20 +1,13 @@
----
-- name: Restart services
-  hosts: localhost
-  become: true
-  vars_files: external_vars.yml
-  tasks:
-    # Restart Nginx
-    - name: Restart Nginx
-      systemd:
-        name: nginx
-        state: restarted
-        enabled: true
+- name: Restart Nginx
+  systemd:
+    name: nginx
+    state: restarted
+    enabled: true
 
-        # Reload and Start Flask Service
-    - name: Reload systemd and start the Flask app service
-      systemd:
-        name: "{{ service_name }}"
-        state: restarted
-        enabled: true
-        daemon_reload: yes
+    # Reload and Start Flask Service
+- name: Reload systemd and start the Flask app service
+  systemd:
+    name: "{{ service_name }}"
+    state: restarted
+    enabled: true
+    daemon_reload: yes

@@ -42,3 +42,5 @@
       fail:
         msg: "Pytest failed. Check the logs above for details."
       when: pytest_result.rc != 0
+      
+    - import_tasks: restart_services.yml
