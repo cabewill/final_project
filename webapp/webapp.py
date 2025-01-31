@@ -4,7 +4,7 @@ from datetime import datetime
 import logging
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///feedback.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////opt/feedback_app/webapp/feedback.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
