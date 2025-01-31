@@ -1,5 +1,5 @@
 import pytest
-from app import app, db, Feedback
+from webapp import app, db, Feedback
 
 @pytest.fixture
 def client():
