@@ -10,11 +10,6 @@
     - name: Deploy newest files
       command: cp -r "{{ temp_dir }}/webapp" "{{ app_dir }}"
 
-    - name: Restart Flask application after changes
-      systemd:
-        name: "flask_app"
-        state: restarted
-
      # Create a Python Virtual Environment
     - name: Create a virtual environment
       command: python3 -m venv "{{ app_dir }}/webapp/venv"

@@ -32,12 +32,28 @@ set -euo pipefail
     sudo git pull
   fi
 
-  sudo chmod +x $REPO_DIR/*.sh
+  # Run the server setup playbook
+  echo "Running server setup playbook..."
+  ansible-playbook -i localhost -c local, $REPO_DIR/playbooks/server_setup.yml
+  if [ $? -ne 0 ]; then
+    echo "Error: Server setup playbook failed."
+    exit 1
+  fi
 
-  source $REPO_DIR/server_setup.sh
+  # Run the webapp deployment playbook
+  echo "Running webapp deployment playbook..."
+  ansible-playbook -i localhost -c local, $REPO_DIR/playbooks/webapp_deploy.yml
+  if [ $? -ne 0 ]; then
+    echo "Error: Webapp deployment playbook failed."
+    exit 1
+  fi
 
-  source $REPO_DIR/webapp_deploy.sh
-
-  source $REPO_DIR/task_deploy.sh
+  # Run the task deployment playbook
+  echo "Running task deployment playbook..."
+  ansible-playbook -i localhost -c local --vault-password-file vault.pass $REPO_DIR/playbooks/task_deploy.yml
+  if [ $? -ne 0 ]; then
+    echo "Error: Task deployment playbook failed."
+    exit 1
+  fi
 
   echo "Setup complete."
