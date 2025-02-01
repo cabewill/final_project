@@ -45,8 +45,8 @@ def feedback():
     if request.method == 'POST':
         comment = request.form['comment']
         experience = request.form['experience']
-        # if not comment or not experience:
-        #     return "Both fields are required!", 400
+        if not comment or not experience:
+            return "Both fields are required!", 400
 
         # Save feedback to DB
         new_feedback = Feedback(comment=comment, experience=experience)
