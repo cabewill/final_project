@@ -55,11 +55,11 @@ If you encounter issues during deployment or execution, use the following steps 
 ### **1️⃣ Check Flask Web Application Logs**
 If the web app is not working, check the logs:
 ```bash
-journalctl -u flask_app --no-pager --lines=50
+journalctl -u feedback_webapp --no-pager --lines=50
 ```
 Restart the web app if needed:
 ```bash
-systemctl restart flask_app
+systemctl restart feedback_webapp
 ```
 Redeploy the web app if needed:
 ```bash
@@ -138,6 +138,15 @@ dmesg | tail -50
 or
 ```bash
 tail -f /var/log/syslog
+```
+
+Here are the key log locations:
+
+```bash
+tail -f /var/log/nginx/access.log
+tail -f /var/log/nginx/error.log
+tail -f /var/log/uwsgi/webapp.log
+tail -f /var/log/nginx/flask_app.log
 ```
 
 ## 📜 License
