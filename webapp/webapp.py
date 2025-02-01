@@ -29,10 +29,10 @@ logging.basicConfig(filename='/var/log/flask_app.log', level=logging.INFO,
 def log_request():
     logging.info(f"Request: {request.method} {request.url}")
 
-# @app.errorhandler(Exception)
-# def handle_exception(e):
-#     logging.error(f"Error: {str(e)}", exc_info=True)
-#     return "Internal Server Error", 500
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logging.error(f"Error: {str(e)}", exc_info=True)
+    return "Internal Server Error", 500
 
 
 @app.route('/health')

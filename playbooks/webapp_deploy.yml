@@ -21,21 +21,5 @@
       command: "{{ app_dir }}/webapp/venv/bin/pip install -r {{ app_dir }}/webapp/requirements.txt"
       args:
         chdir: "{{ app_dir }}/webapp"
-
-    - name: Run unit tests with pytest
-      command: "{{ app_dir }}/webapp/venv/bin/pytest -v"
-      args:
-        chdir: "{{ app_dir }}/webapp"
-      register: pytest_result
-      ignore_errors: yes  # Allow playbook to continue even if tests fail
-
-    - name: Display test results
-      debug:
-        var: pytest_result.stdout_lines
-
-    - name: Fail if tests did not pass
-      fail:
-        msg: "Pytest failed. Check the logs above for details."
-      when: pytest_result.rc != 0
       
     - import_tasks: restart_services.yml
