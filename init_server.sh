@@ -4,6 +4,18 @@ set -euo pipefail
 
   REPO_DIR="/tmp/final_project"
 
+  ask_for_variable() {
+    local var_name=$1
+    local var_value=$(printenv "$var_name")
+
+    if [ -z "$var_value" ]; then
+        read -p "Enter value for $var_name: " var_value
+        export "$var_name=$var_value"
+        echo "✅ $var_name set to '$var_value'"
+    else
+        echo "🔹 $var_name is already set to '$var_value'"
+    fi
+  }
   
   # Check if Ansible is installed
   if ! command -v ansible-playbook &> /dev/null; then
@@ -48,12 +60,16 @@ set -euo pipefail
     exit 1
   fi
 
+  ask_for_variable VAULT_PASSWORD
+
   # Run the task deployment playbook
   echo "Running task deployment playbook..."
-  ansible-playbook -i localhost -c local --vault-password-file vault.pass $REPO_DIR/playbooks/task_deploy.yml
+  ansible-playbook -i localhost -c local --extra-vars "VAULT_PASSWORD=$VAULT_PASSWORD" --vault-password-file vault.pass $REPO_DIR/playbooks/task_deploy.yml
   if [ $? -ne 0 ]; then
     echo "Error: Task deployment playbook failed."
     exit 1
   fi
 
   echo "Setup complete."
+
+
