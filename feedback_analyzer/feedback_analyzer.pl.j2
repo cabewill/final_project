@@ -7,7 +7,7 @@ use LWP::UserAgent;
 use POSIX qw(strftime);
 
 # Configuration
-my $db_file     = "/opt/feedback_app/webapp/instance/feedback.db";  
+my $db_file     = "/opt/feedback_app/webapp/feedback.db";  
 my $asana_token = "{{ vault_asana_token }}";  
 my $asana_project_id = "{{ asana_project_id }}";  
 
@@ -40,9 +40,9 @@ my $neg_percent = $total ? sprintf("%.2f", ($negative / $total) * 100) : 0;
 
 # Prepare Asana task content
 my $task_content = "Feedback Analysis (Last 24 hours):\n";
-$task_content .= "✅ Positive: $positive ($pos_percent%)\n";
-$task_content .= "❌ Negative: $negative ($neg_percent%)\n";
-$task_content .= "📊 Total Feedback: $total\n";
+$task_content .= "Positive: $positive ($pos_percent%)\n";
+$task_content .= "Negative: $negative ($neg_percent%)\n";
+$task_content .= "Total Feedback: $total\n";
 
 # Define task title with the date
 my $task_title = "Daily Feedback Report - $report_date";
